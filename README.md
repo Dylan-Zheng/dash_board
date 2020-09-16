@@ -1,6 +1,6 @@
 #### Dash Board 
 
-This application will load data from CSV file from URL, and Using D3 framework display data into Bivariate Scatterplot, Bar Chart, Correlation Matrix, Scatterplot Matrix and Parallel Coordinates.
+This application will load data from CSV file from URL, and Using D3 framework to display data into Bivariate Scatterplot, Bar Chart, Correlation Matrix, Scatterplot Matrix and Parallel Coordinates.
 
 [Click Me to View Demo](https://dylan-zheng.github.io/dash_board/#!)
 
