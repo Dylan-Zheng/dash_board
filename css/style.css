@@ -1,0 +1,132 @@
+
+.cm_axis path{
+    stroke-width: 0px;
+}
+
+.cm_axis .domain {
+    display: none;
+}
+
+.cm_axis .tick text.selected {
+    font-weight: bold;
+    font-size: 1.1em;
+    fill: #20d1ff;
+    text-shadow: -1px -1px 1px #ffffff, -1px 0px 1px #ffffff, -1px 1px 1px #ffffff, 0px -1px 1px #ffffff, 0px 1px 1px #ffffff, 1px -1px 1px #ffffff, 1px 0px 1px #ffffff, 1px 1px 1px #ffffff;
+}
+
+.cm_axis .tick line.selected {
+    stroke: #20d1ff;
+}
+
+.cm_rect:hover {
+    stroke: #000;
+    stroke-width: 2px;
+}
+
+.cm_tiptool {
+    position: absolute;
+    font-size: .8em;
+    text-align: center;
+    text-shadow: -1px -1px 1px #ffffff, -1px 0px 1px #ffffff, -1px 1px 1px #ffffff, 0px -1px 1px #ffffff, 0px 1px 1px #ffffff, 1px -1px 1px #ffffff, 1px 0px 1px #ffffff, 1px 1px 1px #ffffff;
+}
+
+#cm_legend {
+    margin-bottom: 10px;
+}
+#cm_legend text {
+    font-weight: bold;
+    font-size: .9em;
+    text-shadow: -1px -1px 1px #ffffff, -1px 0px 1px #ffffff, -1px 1px 1px #ffffff, 0px -1px 1px #ffffff, 0px 1px 1px #ffffff, 1px -1px 1px #ffffff, 1px 0px 1px #ffffff, 1px 1px 1px #ffffff;
+
+}
+
+.sm_axis,
+.frame {
+    shape-rendering: crispEdges;
+}
+.sm_axis line {
+    stroke: #ddd;
+}
+.sm_axis path {
+    display: none;
+}
+
+.sm_cell text {
+    font-weight: bold;
+    text-transform: capitalize;
+    fill: black;
+}
+
+.sm_frame {
+    fill: none;
+    stroke: #aaa;
+}
+
+.pc_background path {
+    fill: none;
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+}
+
+.pc_foreground path {
+    fill: none;
+    stroke: #20d1ff;
+}
+
+#bsp_chart {
+    margin: 0px;
+}
+
+#pc_chart {
+    width: 1600px;
+    height: 800px;
+    margin: 10px;
+}
+
+.pc_axis line,
+.pc_axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.pc_axis text {
+    font-weight: bold;
+    font-size: 1.4em;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+    cursor: move;
+}
+.brush .extent {
+    fill-opacity: .3;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.chart {
+    width: 800px;
+    height: 800px;
+    margin: 10px;
+}
+
+#ul_bar{
+    display: block;
+    list-style:none;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-top: 15px;
+}
+
+#ul_bar li {
+    display: block;
+    border-bottom: 0;
+    float: left;
+}
+
+.grid{
+    background:
+            -webkit-linear-gradient(top, transparent 39px, rgba(0, 0, 0, 0.21) 40px),
+            -webkit-linear-gradient(left, transparent 39px, rgba(0, 0, 0, 0.21) 40px);
+    background-size: 40px 40px;
+}

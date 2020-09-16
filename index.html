@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- load css -->
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/nouislider.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>DashBoard</title>
+</head>
+
+
+<script type=text/html id="select-list-template">
+    <div class="row select-element">
+        <div class="row" style="padding-left: 10px;">
+            <select class="browser-default row">
+                <option value="" selected>{[NONE]}</option>
+                <option value="{[]}">{[DELETE]}</option>
+                {{#value}}
+                <option value="{{.}}">{{.}}</option>
+                {{/value}}
+            </select>
+        </div>
+    </div>
+</script>
+
+<script type=text/html id="body_template">
+
+    <!-- Chart 1 -->
+    <div id="chart-1" class="modal" style="width: 80%; max-height: 80%; height: 80%; top: 0px;">
+        <nav>
+            <div class="nav-wrapper" style="background: #0F9D58;">
+                <label class="brand-logo" style="padding-left:20px"> Bivariate Scatterplot </label>
+            </div>
+        </nav>
+        <div class="modal-content" style="height: 90%; ">
+            <div class="row" style="height: 100%">
+                <div class="col s12" style="height: 100%">
+                    <div class="row" style="height: 100%">
+                        <div class="col s2"
+                             style="overflow-y:scroll; overflow: hidden; height: 100%; border-right: 2px solid rgba(0,0,0,0.21); padding-right: 40px">
+
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                X-Axis
+                            </div>
+                            <div class="row">
+                                <select class="browser-default">
+                                    <option value="" selected>{[NONE]}</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                Y-Axis
+                            </div>
+                            <div class="row">
+                                <select class="browser-default">
+                                    <option value="" selected>{[NONE]}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-field col s10" id="svg_chart-1_col" style="height: 100%;">
+                            <svg class="chart" id="svg_chart-1" style="width: 100%; height: 100%;">
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div id="chart-2" class="modal" style="width: 80%; max-height: 80%; height: 80%; top: 0px;">
+        <nav>
+            <div class="nav-wrapper" style="background: #0F9D58;">
+                <label class="brand-logo" style="padding-left:20px"> Bar Chart </label>
+            </div>
+        </nav>
+        <div class="modal-content" style="height: 90%; ">
+            <div class="row" style="height: 100%">
+                <div class="col s12" style="height: 100%">
+                    <div class="row" style="height: 100%">
+                        <div class="col s2"
+                             style="overflow-y:scroll; overflow: hidden; height: 100%; border-right: 2px solid rgba(0,0,0,0.21);
+                    padding-right: 40px">
+
+                            <div class="row">
+                            </div>
+
+
+                            <div class="row">
+                                <div>
+                                    X-Axis
+                                </div>
+                                <select class="browser-default c2select">
+                                    <option value="" selected>{[NONE]}</option>
+                                </select>
+                            </div>
+
+
+                            <div class="row">
+                                <div>
+                                    Y-Axis
+                                </div>
+                                <select class="browser-default c2select">
+                                    <option value="" selected>{[NONE]}</option>
+                                </select>
+                            </div>
+
+
+                            <div class="row">
+                                <div>
+                                    Method
+                                </div>
+                                <select class="browser-default" id="method">
+                                    <option value="SUM" selected>SUM</option>
+                                    <option value="AVG">AVG</option>
+                                    <option value="MAX">MAX</option>
+                                    <option value="MIN">MIN</option>
+                                    <option value="MED">MED</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                Range
+                            </div>
+
+                            <div style="padding-left: 5px; padding-right: 10px">
+                                <div id="range_slider">
+                                </div>
+                            </div>
+
+                            <div class="row"></div>
+
+
+                            <div class="row">
+                                <div>
+                                    Filter
+                                </div>
+                                <textarea id="filter_text" class="materialize-textarea"></textarea>
+                            </div>
+
+                            <div class="row" style="height: 50px; padding-right: 40px">
+                                <a class="col s5 offset-s1 waves-effect waves-light btn setFilterBtn"
+                                   style="background: #F4B400;">Set </a>
+                                <a class="col s5 offset-s1 waves-effect waves-light btn clearFilterBtn"
+                                   style="background: #F4B400;">Clear</a>
+                            </div>
+                        </div>
+
+                        <div class="input-field col s10" id="svg_chart-2_col" style="height: 100%;">
+                            <svg class="chart" id="svg_chart-2" style="width: 100%; height: 100%;">
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 3 -->
+    <div id="chart-3" class="modal" style="width: 70%; max-height: 80%; height: 80%; top: 0px; overflow: hidden;">
+        <nav>
+            <div class="nav-wrapper" style="background: #0F9D58;">
+                <label class="brand-logo" style="padding-left:20px"> Correlation Matrix </label>
+            </div>
+        </nav>
+        <div class="modal-content" style="height: 90%; ">
+            <div class="row" style="height: 100%">
+                <div class="col s12" style="height: 100%">
+                    <div class="row" style="height: 100%">
+                        <div class="col s2" style="height: 100%; border-right: 2px solid rgba(0,0,0,0.21);">
+                            <div class="row"></div>
+
+                            <!-- select list -->
+                            <div class="row select-list"
+                                 style="overflow-y:scroll; height: calc(100% - 70px); padding-left: 30px; padding-right: 40px">
+
+                            </div>
+
+                            <!-- select add btn-->
+                            <div class="row center" style="height: 50px; padding-right: 40px">
+                                <a class="col s12 waves-effect waves-light btn addColBtn" style="background: #F4B400;">Add
+                                    Column</a>
+                            </div>
+
+
+                        </div>
+
+                        <div class="input-field col s10 center" id="svg_chart-3_col" style="height: 100%;">
+                            <div class="row" id="svg_chart-3_l_d" style="width: 100%;">
+                            </div>
+                            <div class="row" id="svg_chart-3_d" style="width: 100%; height: 90%;">
+                                <svg class="chart" id="svg_chart-3" style="width: 100%; height: 95%;">
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 4 -->
+    <div id="chart-4" class="modal" style="width: 80%; max-height: 80%; height: 80%; top: 0px; overflow: hidden;">
+        <nav>
+            <div class="nav-wrapper" style="background: #0F9D58;">
+                <label class="brand-logo" style="padding-left:20px"> Scatterplot Matrix </label>
+            </div>
+        </nav>
+        <div class="modal-content" style="height: 90%; ">
+            <div class="row" style="height: 100%">
+                <div class="col s12" style="height: 100%">
+                    <div class="row" style="height: 100%">
+                        <div class="col s2" style="height: 100%; border-right: 2px solid rgba(0,0,0,0.21);">
+                            <div class="row"></div>
+
+                            <!-- select list -->
+                            <div class="row select-list"
+                                 style="overflow-y:scroll; height: calc(100% - 70px); padding-left: 30px; padding-right: 40px">
+
+                            </div>
+
+                            <!-- select add btn-->
+                            <div class="row center" style="height: 50px; padding-right: 40px">
+                                <a class="col s12 waves-effect waves-light btn addColBtn" style="background: #F4B400;">Add
+                                    Column</a>
+                            </div>
+
+                        </div>
+
+                        <div class="input-field col s10 center" id="svg_chart-4_col" style="height: 100%;">
+                            <svg class="chart" id="svg_chart-4" style="width: 100%; height: 100%;">
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart 5 -->
+    <div id="chart-5" class="modal" style="width: 80%; max-height: 80%; height: 80%; top: 0px; overflow: hidden;">
+        <nav>
+            <div class="nav-wrapper" style="background: #0F9D58;">
+                <label class="brand-logo" style="padding-left:20px"> Parallel Coordinates </label>
+            </div>
+        </nav>
+        <div class="modal-content" style="height: 90%; ">
+            <div class="row" style="height: 100%">
+                <div class="col s12" style="height: 100%">
+                    <div class="row" style="height: 100%">
+                        <div class="col s2" style="height: 100%; border-right: 2px solid rgba(0,0,0,0.21);">
+                            <div class="row"></div>
+
+                            <!-- select list -->
+                            <div class="row select-list"
+                                 style="overflow-y:scroll; height: calc(100% - 70px); padding-left: 30px; padding-right: 40px">
+
+                            </div>
+
+                            <!-- select add btn-->
+                            <div class="row center" style="height: 50px; padding-right: 40px">
+                                <a class="col s12 waves-effect waves-light btn addColBtn" style="background: #F4B400;">Add
+                                    Column</a>
+                            </div>
+
+                        </div>
+
+                        <div class="input-field col s10" id="svg_chart-5_col" style="height: 100%;">
+                            <svg class="chart" id="svg_chart-5" style="width: 100%; height: 100%;">
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Small Chart -->
+    <div class="valign-wrapper" style="height: 1300px; width: 100%;">
+        <div class="container" style="height:100%;">
+            <div class="row" style="height:100px;"></div>
+            <div class="row" style="height:400px;">
+
+                <!-- chart 1 small -->
+                <div class="col s6" style="height:100%;">
+                    <a class="modal-trigger" href="#chart-1" style="height:100%;">
+                        <div class="card-panel hoverable" style="height:100%;">
+                            <svg id="svg_chart-1_s" style="width:100%; height:100%;">
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- chart 2 small -->
+                <div class="col s6" style="height:100%;">
+                    <a class="modal-trigger" href="#chart-2" style="height:100%;">
+                        <div class="card-panel hoverable" style="height:100%;">
+                            <svg id="svg_chart-2_s" style="width:100%; height:100%;">
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="row" style="height:400px;">
+
+                <!-- chart 3 small -->
+                <div class="col s6 center" style="height:100%;">
+                    <a class="modal-trigger" href="#chart-3" style="height:100%;">
+                        <div class="card-panel hoverable" style="height:100%;">
+                            <svg id="svg_chart-3_s" style="width:100%; height:100%;">
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- chart 4 small -->
+                <div class="col s6" style="height:100%;">
+                    <a class="modal-trigger" href="#chart-4" style="height:100%;">
+                        <div class="card-panel hoverable center" style="height:100%;">
+                            <svg id="svg_chart-4_s" style="width:100%; height:100%;">
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="row" style="height:400px;">
+
+                <!-- chart 5 small -->
+                <div class="col s12" style="height:100%;">
+                    <a class="modal-trigger" href="#chart-5" style="height:100%;">
+                        <div class="card-panel hoverable" style="height:100%;">
+                            <svg id="svg_chart-5_s" style="width:100%; height:100%;">
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<body class="grid" style="height: 1500px;" >
+<nav style="top:0; position: fixed;">
+    <div class="nav-wrapper" style="background: #4285F4;">
+        <label class="brand-logo" style="padding-left:20px" id="nav_title"> DashBoard </label>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <!-- Load Data Modal Btn-->
+            <li><a class="modal-trigger" href="#load_data_modal">Load Data</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- Load Data Modal Structure-->
+<div id="load_data_modal" class="modal">
+    <div class="modal-content">
+        <nav>
+            <div class="nav-wrapper" style="background: #DB4437;">
+                <label class="brand-logo" style="padding-left:20px"> Load Data </label>
+            </div>
+        </nav>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="title" type="text" class="validate">
+                        <label for="title">Data Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="data_url" class="materialize-textarea"></textarea>
+                        <label for="data_url">Data URL</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s1 offset-s11">
+                        <a href="#!" class="modal-close waves-effect waves-light btn" id="loadBtn" style="background: #DB4437;">Load</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="body_container">
+
+</div>
+
+<!-- Load js -->
+<!-- Chart -->
+<script type="text/javascript" src="js/chart/tool.js"></script>
+<script type="text/javascript" src="js/chart/chart.js"></script>
+<script type="text/javascript" src="js/chart/bsp.js"></script>
+<script type="text/javascript" src="js/chart/cm.js"></script>
+<script type="text/javascript" src="js/chart/pc.js"></script>
+<script type="text/javascript" src="js/chart/bc.js"></script>
+<script type="text/javascript" src="js/chart/sm.js"></script>
+<!-- Libs -->
+<script type="text/javascript" src="js/libs/chroma.min.js"></script>
+<script type="text/javascript" src="js/libs/d3.v4.js"></script>
+<script type="text/javascript" src="js/libs/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="js/libs/jquery-ui.js"></script>
+<script type="text/javascript" src="js/libs/nouislider.js"></script>
+<script type="text/javascript" src="js/libs/mustache.js"></script>
+<script type="text/javascript" src="js/libs/materialize.js"></script>
+<!-- index js -->
+<script type="text/javascript" src="js/index.js"></script>
+
+
+</body>
+
+<!--
+    Blue    #4285F4
+    Red     #DB4437
+    Yellow  #F4B400
+    Green   #0F9D58
+ -->
+
+</html>
+
+<script>
+    $("body select")
+</script>
